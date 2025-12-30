@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ilpakamani - Raíces Ancestrales, Sonido Futuro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Space+Mono:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Mismos colores tierra/andinos del diseño original */
+            --color-primary: #D4451B;
+            --color-secondary: #8B4513;
+            --color-accent: #FFB84D;
+            --color-dark: #1A1A1A;
+            --color-light: #FFF8F0;
+            --gradient-hero: linear-gradient(135deg, #D4451B 0%, #8B4513 50%, #FFB84D 100%);
+            --gradient-dark: linear-gradient(180deg, #1A1A1A 0%, #2C1810 100%);
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--color-dark);
+            color: var(--color-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animaciones sutiles */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 69, 27, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(255, 184, 77, 0.4); }
+        }
+
+        /* Estilos Generales */
+        .section { padding: 5rem 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--color-accent);
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-dark);
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 69, 27, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 8vw, 6rem);
+            font-weight: 900;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero-quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            border-left: 3px solid var(--color-primary);
+            padding-left: 1.5rem;
+        }
+
+        /* Botones */
+        .btn {
+            padding: 1rem 2.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-hero);
+            color: white;
+            animation: glow 3s infinite;
+        }
+        .btn-primary:hover { transform: translateY(-3px); }
+
+        .btn-secondary {
+            border: 2px solid var(--color-accent);
+            color: var(--color-accent);
+        }
+        .btn-secondary:hover { background: var(--color-accent); color: var(--color-dark); }
+
+        /* Cards y Grillas */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 69, 27, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--color-accent);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+        }
+
+        /* Lista musical */
+        .music-list { list-style: none; padding: 0; }
+        .music-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .music-list li::before {
+            content: '♪';
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+        }
+
+        /* Perfil Armin */
+        .profile-section {
+            background: linear-gradient(135deg, rgba(212, 69, 27, 0.1) 0%, rgba(26, 26, 26, 0.9) 100%);
+            border: 1px solid var(--color-primary);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        /* Timeline simplificado */
+        .timeline-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            align-items: flex-start;
+        }
+        .timeline-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--color-primary);
+            line-height: 1;
+        }
+        .timeline-content h3 { color: var(--color-light); margin-bottom: 0.5rem; }
+
+        /* Pricing sin precios */
+        .plan-card {
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+        }
+        .plan-card.featured {
+            border: 2px solid var(--color-accent);
+            background: linear-gradient(180deg, rgba(255, 184, 77, 0.05) 0%, transparent 100%);
+        }
+        .plan-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hero-text { padding: 0 1rem; }
+            .section { padding: 3rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-content">
+            <p style="letter-spacing: 3px; text-transform: uppercase; color: var(--color-accent); margin-bottom: 1rem;">Propuesta Artística</p>
+            <h1 class="logo-text">ilpakamani</h1>
+            <h2 style="font-family: 'Space Mono'; font-weight: 400; font-size: 1.5rem; margin-bottom: 2rem;">Raíces Ancestrales, Sonido Futuro</h2>
+            
+            <div class="hero-quote">
+                "La tecnología no debe reemplazar al músico, debe amplificar su alma. Esa es la mezcla perfecta."
+            </div>
+
+            <p style="margin-bottom: 2rem; font-size: 1.1rem; color: #ccc;">
+                Presentado por: <strong>Armin Salazar</strong><br>
+                <span style="font-size: 0.9rem; color: var(--color-primary);">Productor Musical & Experto en IA</span>
+            </p>
+
+            <div>
+                <a href="#vision" class="btn btn-primary">Ver la Visión</a>
+                <a href="#contacto" class="btn btn-secondary">Hablemos</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="vision" class="section">
+        <div class="container">
+            <div class="profile-section">
+                <h2 class="section-title" style="font-size: 2rem;">¿Por qué Armin Salazar?</h2>
+                <p style="max-width: 800px; margin: 0 auto 2rem; font-size: 1.1rem;">
+                    La mayoría de las empresas de tecnología son ingenieros que no distinguen un charango de una guitarra.
+                    Yo ofrezco algo distinto:
+                </p>
+                <div class="cards-grid" style="text-align: left;">
+                    <div class="card" style="border: none; background: transparent;">
+                        <h3 class="card-title">🎹 El Músico</h3>
+                        <p>Entiendo el "fiato" de la banda, la dinámica del vivo y el respeto profundo por el folclore y la raíz.</p>
+                    </div>
+                    <div class="card" style="border: none; background: transparent;">
+                        <h3 class="card-title">🤖 El Experto IA</h3>
+                        <p>Sé configurar la inteligencia artificial para que trabaje *para* el artista, potenciando su creatividad sin invadirla.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="estudio" class="section" style="background: var(--gradient-dark);">
+        <div class="container">
+            <h2 class="section-title">Ilpakamani AI Studio</h2>
+            <p class="section-subtitle">No es software, es un ecosistema de producción musical</p>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🎼</div>
+                    <h3 class="card-title">Composición y Alma</h3>
+                    <p class="card-desc">Herramientas para expandir la creatividad respetando la raíz.</p>
+                    <ul class="music-list">
+                        <li><strong>Co-Piloto Creativo:</strong> Sugerencias de arreglos en escalas andinas.</li>
+                        <li><strong>Lírica Profunda:</strong> Asistente para pulir versos y poesía social.</li>
+                        <li><strong>Rescate de Raíz:</strong> Análisis de estructuras folclóricas tradicionales.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎚️</div>
+                    <h3 class="card-title">Producción Pro</h3>
+                    <p class="card-desc">Calidad de estudio internacional, automatizada.</p>
+                    <ul class="music-list">
+                        <li><strong>Ingeniería IA:</strong> Mezcla y Masterización automática de alta gama.</li>
+                        <li><strong>Sala Virtual:</strong> Análisis de afinación y groove para ensayos.</li>
+                        <li><strong>Sonido Puro:</strong> Calibrado para instrumentos acústicos reales.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🌎</div>
+                    <h3 class="card-title">Escenario y Gira</h3>
+                    <p class="card-desc">Llevando la música a nuevas audiencias.</p>
+                    <ul class="music-list">
+                        <li><strong>Tour Manager Digital:</strong> Rutas inteligentes donde están los fans.</li>
+                        <li><strong>Arte Visual:</strong> Creación de portadas y visuales para shows.</li>
+                        <li><strong>Sonido en Vivo:</strong> Asistente de microfonía para cada recinto.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">El Viaje Sonoro</h2>
+            <p class="section-subtitle">Un plan de trabajo enfocado en resultados artísticos</p>
+
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="timeline-item">
+                    <div class="timeline-number">01</div>
+                    <div class="timeline-content">
+                        <h3>El Sonido (Mes 1)</h3>
+                        <p style="color: rgba(255,255,255,0.7);">Optimización del catálogo actual. Remasterización con IA de los 4 discos para estándares de streaming 2025 y setup del estudio virtual.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">02</div>
+                    <div class="timeline-content">
+                        <h3>La Creación (Mes 2)</h3>
+                        <p style="color: rgba(255,255,255,0.7);">Producción de un <strong>nuevo single</strong> utilizando el flujo híbrido (Humano + IA). Creación de arte visual y videoclip generativo.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">03</div>
+                    <div class="timeline-content">
+                        <h3>El Escenario (Mes 3)</h3>
+                        <p style="color: rgba(255,255,255,0.7);">Lanzamiento estratégico. Distribución inteligente a 150+ plataformas y preparación técnica para shows en vivo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: rgba(255,255,255,0.02);">
+        <div class="container">
+            <h2 class="section-title">Modelos de Trabajo</h2>
+            <p class="section-subtitle">Flexibilidad para cada etapa de la banda</p>
+
+            <div class="cards-grid" style="max-width: 900px; margin: 0 auto;">
+                
+                <div class="plan-card">
+                    <h3 class="plan-name">Plan Esencial</h3>
+                    <p style="color: var(--color-accent); margin-bottom: 2rem; font-family: 'Space Mono';">CUIDAR EL LEGADO</p>
+                    <p style="margin-bottom: 2rem;">Ideal para optimizar lo que ya existe.</p>
+                    <ul class="music-list" style="text-align: left; display: inline-block;">
+                        <li>Remasterización de catálogo</li>
+                        <li>Web visual actualizada</li>
+                        <li>Distribución digital básica</li>
+                    </ul>
+                    <div style="margin-top: 2rem;">
+                        <a href="#contacto" class="btn btn-secondary">Cotizar</a>
+                    </div>
+                </div>
+
+                <div class="plan-card featured">
+                    <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--color-primary); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">RECOMENDADO</div>
+                    <h3 class="plan-name">Plan Profesional</h3>
+                    <p style="color: var(--color-accent); margin-bottom: 2rem; font-family: 'Space Mono';">CREAR EL FUTURO</p>
+                    <p style="margin-bottom: 2rem;">Suite completa de producción y expansión.</p>
+                    <ul class="music-list" style="text-align: left; display: inline-block;">
+                        <li>Todo lo del plan Esencial</li>
+                        <li>Herramientas de Composición IA</li>
+                        <li>Producción de nuevos Singles</li>
+                        <li>Tour Manager & Marketing</li>
+                    </ul>
+                    <div style="margin-top: 2rem;">
+                        <a href="#contacto" class="btn btn-primary">Agendar Reunión</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="section" style="text-align: center; padding-top: 6rem;">
+        <div class="container">
+            <h2 class="section-title">Hablemos de Música</h2>
+            <p style="max-width: 600px; margin: 0 auto 3rem; font-size: 1.1rem;">
+                Agendemos una sesión para escuchar sus maquetas y mostrarles cómo suenan pasadas por el motor de producción IA.
+            </p>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="mailto:soporte.aiwis@gmail.com?subject=Propuesta Musical Ilpakamani" class="btn btn-primary">
+                    📧 Enviar Correo
+                </a>
+                <a href="https://wa.me/56939580988" class="btn btn-secondary">
+                    📱 WhatsApp Directo
+                </a>
+            </div>
+            
+            <p style="margin-top: 4rem; color: rgba(255,255,255,0.5); font-size: 0.9rem;">
+                © 2025 AIWIS Music - Armin Salazar
+            </p>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scroll simple
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
